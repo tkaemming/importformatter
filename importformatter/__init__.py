@@ -3,6 +3,7 @@ Groups, sorts, and prints formatted imports statements.
 """
 import ast
 import logging
+import operator
 import os
 from collections import defaultdict
 
@@ -25,7 +26,7 @@ class ImportGroup(object):
     def __str__(self):
         output = []
 
-        for alias in sorted(self.modules):
+        for alias in sorted(self.modules, key=lambda alias: alias.name):
             output.append('import %s' % format_alias(alias))
 
         for module in sorted(self.relative.keys()):
