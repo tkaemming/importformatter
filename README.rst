@@ -50,7 +50,7 @@ For the given ``bad.py``::
 
     import os
 
-the resulting code will be::
+The output of ``format-imports.py -a application < bad.py`` will be:
 
     import os
     import sys
