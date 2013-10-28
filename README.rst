@@ -30,7 +30,9 @@ The script accepts input via ``stdin``, and outputs the formatted code via ``std
 Example
 -------
 
-For the given ``bad.py``::
+For the given ``bad.py``:
+
+.. code:: python
 
     import sys
 
@@ -50,7 +52,9 @@ For the given ``bad.py``::
 
     import os
 
-The output of ``format-imports.py -a application < bad.py`` will be::
+The output of ``format-imports.py -a application < bad.py`` will be:
+
+.. code:: python
 
     import os
     import sys
