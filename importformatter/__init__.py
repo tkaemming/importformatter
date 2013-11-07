@@ -42,6 +42,10 @@ class ImportGroup(object):
         return '\n'.join(output)
 
 
+SPECIAL_MODULES = frozenset((
+    '__future__',
+))
+
 
 class ImportCollector(ast.NodeVisitor):
     def __init__(self, name, stdlib, *args, **kwargs):
@@ -51,16 +55,22 @@ class ImportCollector(ast.NodeVisitor):
             logger.warning('No application name provided')
 
         self.stdlib = stdlib
+
+        self.special = ImportGroup()
         self.standard = ImportGroup()
         self.thirdparty = ImportGroup()
         self.application = ImportGroup()
 
     def __str__(self):
         return '\n\n'.join(filter(None, (str(group) for group in (
+            self.special,
             self.standard,
             self.thirdparty,
             self.application,
         ))))
+
+    def is_special(self, name):
+        return name in SPECIAL_MODULES
 
     def is_standard(self, name):
         return name in self.stdlib
@@ -70,7 +80,9 @@ class ImportCollector(ast.NodeVisitor):
 
     def visit_Import(self, node):
         for alias in node.names:
-            if self.is_standard(alias.name):
+            if self.is_special(alias.name):
+                target = self.special
+            elif self.is_standard(alias.name):
                 target = self.standard
             elif self.is_application(alias.name):
                 target = self.application
@@ -82,7 +94,9 @@ class ImportCollector(ast.NodeVisitor):
     def visit_ImportFrom(self, node):
         module = node.module
         for alias in node.names:
-            if self.is_standard(module):
+            if self.is_special(module):
+                target = self.special
+            elif self.is_standard(module):
                 target = self.standard
             elif self.is_application(module):
                 target = self.application

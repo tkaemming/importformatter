@@ -28,7 +28,6 @@ UserDict
 UserList
 UserString
 __builtin__
-__future__
 __main__
 _winreg
 abc

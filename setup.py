@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='importformatter',
-    version='0.1.1',
+    version='0.1.3',
     description='Groups, sorts, and formats import statements.',
     long_description=open('README.rst').read(),
     author='Ted Kaemming, Disqus',
