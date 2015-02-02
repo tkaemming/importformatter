@@ -180,6 +180,7 @@ popen2
 poplib
 posix
 posixfile
+posixpath
 pprint
 pty
 pwd
